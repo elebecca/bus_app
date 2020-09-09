@@ -1,11 +1,23 @@
 import React from 'react';
 import './App.css'
-import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps"
+import { GoogleMap, withScriptjs, withGoogleMap, Marker } from "react-google-maps"
+import * as parkData from "./data/skateboard.json";
+
 
 function Map() {
   return <GoogleMap
-    defaultZoom={13}
-    defaultCenter={{ lat: 51.509865, lng: -0.118092 }} />
+    defaultZoom={10}
+    defaultCenter={{ lat: 45.4211, lng: -75.6903 }} >
+    {parkData.features.map(park => (
+      <Marker
+        key={park.properties.PARK_ID}
+        position={{
+          lat: park.geometry.coordinates[1],
+          lng: park.geometry.coordinates[0]
+        }}
+      />
+    ))}
+  </GoogleMap>
 }
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
